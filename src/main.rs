@@ -11,7 +11,7 @@ fn fibonacci_til_n() {
     println!("Enter number of elements you need: ");
     let mut num = String::new();
     io::stdin().read_line(&mut num).expect("Expected string");
-    let num: u32 = num.trim().parse().expect("Not a Number");
+    let num: u32 = num.trim().parse().expect("Only supports numbers above 0.");
     println!("Printing {num} Elements of fibonacci series...");
     fibonacci(num);
 }
