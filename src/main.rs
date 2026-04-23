@@ -2,7 +2,6 @@ use std::env;
 use crate::grep::exec;
 fn main () {
     let args: Vec<String> = env::args().collect();
-    println!("{:?}", args);
     let config = Config::build(&args).expect("Must be valid config.");
     // searching for query in provided file_path
     exec(&config);
@@ -30,12 +29,14 @@ mod grep {
     pub fn exec(conf: &Config) {
         // reading the file
         let content = read_file(&conf.path).expect("File should open.");
+        let results: Vec<String>;
         // calling search based on case sensi
         if conf.ignore_case {
-            search_case_insensitive(&conf.query, &content);
+            results = search_case_insensitive(&conf.query, &content);
         }else {
-            search_case_sensitive(&conf.query, &content);
+            results = search_case_sensitive(&conf.query, &content);
         }
+        println!("\nFound: {:?}\n", results)
     }
     fn read_file(path: &String) -> Result<String, std::io::Error> {
         let content = fs::read_to_string(path)?;
